@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Calendrier de l’avent 2026 – Suivi</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,800&display=swap" rel="stylesheet">
+<style>
+:root{--fond:#16302a;--fond2:#1f3f36;--case:#f1ece2;--texte:#1d2b26;--or:#d4a24c;--rouge:#a8323e;--ok:#3f8f5c;--gris:#9aa59f}
+*{box-sizing:border-box;margin:0}
+html,body{height:100%;overflow:hidden}
+body{background:var(--fond);color:var(--texte);font:14px/1.35 system-ui,-apple-system,"Segoe UI",sans-serif;display:flex;flex-direction:column;padding:10px 14px 14px;gap:10px}
+header{display:flex;align-items:center;gap:18px;color:#f1ece2;flex-wrap:wrap}
+h1{font:800 22px/1 Fraunces,Georgia,serif;white-space:nowrap}
+h1 small{font:600 13px system-ui,sans-serif;color:var(--or);margin-left:8px}
+.stats{display:flex;gap:6px;flex:1;flex-wrap:wrap}
+.chip{background:var(--fond2);border:1px solid #2f5448;border-radius:99px;padding:3px 10px;font-size:12px;white-space:nowrap}
+.chip b{color:var(--or)}
+.tools{display:flex;gap:6px}
+button{font:inherit;cursor:pointer}
+.btn{background:transparent;color:#f1ece2;border:1px solid #4a7467;border-radius:6px;padding:5px 10px;font-size:12px}
+.btn:hover{background:var(--fond2)}
+.bar{height:5px;background:var(--fond2);border-radius:9px;overflow:hidden}
+.bar i{display:block;height:100%;background:var(--or);width:0;transition:width .3s}
+#grille{flex:1;min-height:0;display:grid;grid-template-columns:repeat(8,1fr);grid-template-rows:repeat(3,1fr);gap:8px}
+@media(max-width:1000px){#grille{grid-template-columns:repeat(6,1fr);grid-template-rows:repeat(4,1fr)}}
+@media(max-width:620px){#grille{grid-template-columns:repeat(4,1fr);grid-template-rows:repeat(6,1fr);gap:5px}.lot,.jour{display:none}}
+.case{position:relative;background:var(--case);border-radius:8px;border:2px solid transparent;padding:7px 8px;display:flex;flex-direction:column;text-align:left;overflow:hidden;min-height:0;background-size:cover;background-position:center}
+.case:hover{border-color:var(--or)}
+.case:focus-visible{outline:3px solid var(--or);outline-offset:2px}
+.case.photo::before{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(241,236,226,.92) 0%,rgba(241,236,226,.55) 45%,rgba(22,48,42,.75) 100%)}
+.case>*{position:relative}
+.num{font:800 30px/1 Fraunces,Georgia,serif;color:var(--rouge)}
+.jour{font-size:11px;color:#5d6b65;margin-top:1px}
+.lot{margin-top:4px;font-weight:600;font-size:12.5px;overflow:hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical}
+.lot.vide{font-weight:400;color:var(--gris);font-style:italic}
+.pts{margin-top:auto;display:flex;gap:4px}
+.pt{width:15px;height:15px;border-radius:50%;border:1.5px solid #b7beb9;background:rgba(255,255,255,.7);font-size:9px;display:grid;place-items:center;color:#fff}
+.pt.on{background:var(--ok);border-color:var(--ok)}
+.case.complete{border-color:var(--ok)}
+.case.complete::after{content:"✓";position:absolute;top:5px;right:7px;color:var(--ok);font-weight:800;font-size:16px}
+/* panneau d'édition */
+#fond{position:fixed;inset:0;background:rgba(10,22,18,.7);display:none;place-items:center;padding:14px}
+#fond.ouvert{display:grid}
+#fiche{background:var(--case);border-radius:12px;width:min(980px,100%);max-height:100%;display:grid;grid-template-columns:330px 1fr;overflow:hidden}
+#fiche>div{padding:16px 18px;min-height:0;display:flex;flex-direction:column;gap:9px}
+#fiche .droite{background:#e6dfd0}
+.tete{display:flex;align-items:center;gap:8px}
+.tete h2{font:800 26px/1 Fraunces,Georgia,serif;color:var(--rouge);flex:1}
+.nav{background:#fff;border:1px solid #cfc8b8;border-radius:6px;width:30px;height:30px}
+.nav:hover{border-color:var(--or)}
+label.champ{display:flex;flex-direction:column;gap:3px;font-size:12px;font-weight:600;color:#4a5a53}
+input[type=text],textarea{font:inherit;font-weight:400;color:var(--texte);padding:7px 9px;border:1px solid #cfc8b8;border-radius:6px;background:#fff;width:100%}
+input[type=text]:focus,textarea:focus{outline:2px solid var(--or);border-color:var(--or)}
+.etapes{display:grid;gap:5px;margin-top:2px}
+.etape{display:flex;align-items:center;gap:9px;background:#fff;border:1px solid #cfc8b8;border-radius:7px;padding:7px 10px;cursor:pointer;user-select:none}
+.etape input{width:17px;height:17px;accent-color:var(--ok)}
+.etape.on{background:#e3f0e7;border-color:var(--ok)}
+.droite textarea{flex:1;resize:none;min-height:0}
+.photo-zone{display:flex;gap:10px;align-items:stretch;height:150px}
+.vignette{width:200px;flex:none;border-radius:8px;border:2px dashed #bdb5a2;background:#f6f2e9 center/cover no-repeat;display:grid;place-items:center;color:#8a8a7c;font-size:12px;text-align:center;cursor:pointer}
+.photo-zone .actions{display:flex;flex-direction:column;gap:6px;justify-content:center}
+.btn2{background:#fff;border:1px solid #cfc8b8;border-radius:6px;padding:6px 10px;font-size:12px}
+.btn2:hover{border-color:var(--or)}
+.btn2.danger{color:var(--rouge)}
+.pied{display:flex;justify-content:space-between;align-items:center;font-size:12px;color:#5d6b65}
+.fermer{background:var(--fond);color:#fff;border:0;border-radius:6px;padding:7px 16px}
+@media(max-width:760px){#fiche{grid-template-columns:1fr;overflow:auto}}
+</style>
+</head>
+<body>
+<header>
+  <h1>Calendrier de l’avent 2026<small>Office de Tourisme</small></h1>
+  <div class="stats" id="stats"></div>
+  <div class="tools">
+    <button class="btn" id="exp">Exporter</button>
+    <button class="btn" id="imp">Importer</button>
+    <button class="btn" id="raz">Tout effacer</button>
+    <input type="file" id="fimp" accept=".json" hidden>
+  </div>
+</header>
+<div class="bar"><i id="prog"></i></div>
+<main id="grille"></main>
+
+<div id="fond">
+  <div id="fiche" role="dialog" aria-modal="true" aria-label="Fiche de la case">
+    <div>
+      <div class="tete">
+        <button class="nav" id="prec" aria-label="Case précédente">‹</button>
+        <h2 id="titre"></h2>
+        <button class="nav" id="suiv" aria-label="Case suivante">›</button>
+      </div>
+      <label class="champ">Lot<input type="text" id="lot" placeholder="Ex. : Panier garni, 2 entrées au domaine…"></label>
+      <label class="champ">Partenaire<input type="text" id="part" placeholder="Nom du partenaire"></label>
+      <label class="champ">Gagnant(e)<input type="text" id="gagnant" placeholder="Nom du ou de la gagnant(e)"></label>
+      <div class="etapes" id="etapes"></div>
+    </div>
+    <div class="droite">
+      <div class="photo-zone">
+        <div class="vignette" id="vignette" tabindex="0" role="button">Cliquer pour ajouter la photo</div>
+        <div class="actions">
+          <button class="btn2" id="choisir">Choisir une photo</button>
+          <button class="btn2 danger" id="retirer">Retirer</button>
+          <input type="file" id="fphoto" accept="image/*" hidden>
+        </div>
+      </div>
+      <label class="champ" style="flex:1;min-height:0">Texte de la publication
+        <textarea id="texte" placeholder="Rédigez ici le texte de la publication du jour…"></textarea>
+      </label>
+      <div class="pied">
+        <span id="compte"></span>
+        <span><button class="btn2" id="copier">Copier le texte</button>
+        <button class="fermer" id="ferme">Fermer</button></span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+var ETAPES=[["recup","Lot récupéré"],["conv","Convention signée"],["pioche","Gagnant(e) pioché(e)"],["contact","Gagnant(e) contacté(e)"],["prog","Publication programmée"]];
+var CLE="avent2026-v1", data={}, cur=1;
+var $=function(id){return document.getElementById(id)};
+function charger(){try{data=JSON.parse(localStorage.getItem(CLE))||{}}catch(e){data={}}}
+function sauver(){try{localStorage.setItem(CLE,JSON.stringify(data))}catch(e){alert("Enregistrement impossible (espace plein ?). Pensez à exporter vos données.")}}
+function get(d){return data[d]||(data[d]={lot:"",part:"",gagnant:"",texte:"",photo:"",recup:0,conv:0,pioche:0,contact:0,prog:0})}
+function complete(c){return ETAPES.every(function(e){return c[e[0]]})}
+
+function dessiner(){
+  var g=$("grille"),h="",tot={},nbOk=0;
+  ETAPES.forEach(function(e){tot[e[0]]=0});
+  for(var d=1;d<=24;d++){
+    var c=get(d),ok=complete(c);if(ok)nbOk++;
+    ETAPES.forEach(function(e){if(c[e[0]])tot[e[0]]++});
+    var jour=new Date(2026,11,d).toLocaleDateString("fr-FR",{weekday:"long"});
+    var pts=ETAPES.map(function(e){return '<span class="pt'+(c[e[0]]?' on':'')+'" title="'+e[1]+'">'+(c[e[0]]?'✓':'')+'</span>'}).join("");
+    h+='<button class="case'+(c.photo?' photo':'')+(ok?' complete':'')+'" data-d="'+d+'"'+(c.photo?' style="background-image:url('+c.photo+')"':'')+'>'
+      +'<span class="num">'+d+'</span><span class="jour">'+jour+'</span>'
+      +'<span class="lot'+(c.lot?'':' vide')+'">'+(c.lot?esc(c.lot):'Lot à définir')+'</span>'
+      +'<span class="pts">'+pts+'</span></button>';
+  }
+  g.innerHTML=h;
+  $("stats").innerHTML='<span class="chip"><b>'+nbOk+'/24</b> cases complètes</span>'+ETAPES.map(function(e){return '<span class="chip">'+e[1]+' <b>'+tot[e[0]]+'/24</b></span>'}).join("");
+  var tt=0;ETAPES.forEach(function(e){tt+=tot[e[0]]});
+  $("prog").style.width=(tt/(24*ETAPES.length)*100)+"%";
+}
+function esc(s){return s.replace(/[&<>"]/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]})}
+
+function ouvrir(d){
+  cur=d;var c=get(d);
+  $("titre").textContent=new Date(2026,11,d).toLocaleDateString("fr-FR",{weekday:"long",day:"numeric",month:"long"});
+  $("lot").value=c.lot;$("part").value=c.part;$("gagnant").value=c.gagnant;$("texte").value=c.texte;
+  $("etapes").innerHTML=ETAPES.map(function(e){return '<label class="etape'+(c[e[0]]?' on':'')+'"><input type="checkbox" data-k="'+e[0]+'"'+(c[e[0]]?' checked':'')+'>'+e[1]+'</label>'}).join("");
+  vignette();compte();$("fond").classList.add("ouvert");
+}
+function vignette(){var c=get(cur),v=$("vignette");v.style.backgroundImage=c.photo?'url('+c.photo+')':"";v.style.borderStyle=c.photo?"solid":"dashed";v.textContent=c.photo?"":"Cliquer pour ajouter la photo"}
+function compte(){var n=$("texte").value.length;$("compte").textContent=n+" caractère"+(n>1?"s":"")}
+function fermer(){$("fond").classList.remove("ouvert");dessiner()}
+
+$("grille").addEventListener("click",function(ev){var b=ev.target.closest(".case");if(b)ouvrir(+b.dataset.d)});
+[["lot","lot"],["part","part"],["gagnant","gagnant"],["texte","texte"]].forEach(function(p){
+  $(p[0]).addEventListener("input",function(){get(cur)[p[1]]=this.value;sauver();if(p[0]==="texte")compte()});
+});
+$("etapes").addEventListener("change",function(ev){
+  var k=ev.target.dataset.k;if(!k)return;
+  get(cur)[k]=ev.target.checked?1:0;ev.target.parentNode.classList.toggle("on",ev.target.checked);sauver();
+});
+$("ferme").onclick=fermer;
+$("fond").addEventListener("mousedown",function(ev){if(ev.target===this)fermer()});
+$("prec").onclick=function(){ouvrir(cur>1?cur-1:24);dessiner()};
+$("suiv").onclick=function(){ouvrir(cur<24?cur+1:1);dessiner()};
+document.addEventListener("keydown",function(ev){if(ev.key==="Escape"&&$("fond").classList.contains("ouvert"))fermer()});
+$("copier").onclick=function(){var t=$("texte");t.select();try{navigator.clipboard.writeText(t.value)}catch(e){document.execCommand("copy")}this.textContent="Copié";var b=this;setTimeout(function(){b.textContent="Copier le texte"},1200)};
+
+function choisirPhoto(){$("fphoto").click()}
+$("vignette").onclick=choisirPhoto;$("choisir").onclick=choisirPhoto;
+$("vignette").addEventListener("keydown",function(ev){if(ev.key==="Enter"||ev.key===" ")choisirPhoto()});
+$("retirer").onclick=function(){get(cur).photo="";sauver();vignette()};
+$("fphoto").addEventListener("change",function(){
+  var f=this.files[0];if(!f)return;var fr=new FileReader();
+  fr.onload=function(){var im=new Image();im.onload=function(){
+    var m=800,r=Math.min(1,m/Math.max(im.width,im.height)),cv=document.createElement("canvas");
+    cv.width=Math.round(im.width*r);cv.height=Math.round(im.height*r);
+    cv.getContext("2d").drawImage(im,0,0,cv.width,cv.height);
+    get(cur).photo=cv.toDataURL("image/jpeg",.78);sauver();vignette();
+  };im.src=fr.result};
+  fr.readAsDataURL(f);this.value="";
+});
+
+$("exp").onclick=function(){
+  var a=document.createElement("a");a.href=URL.createObjectURL(new Blob([JSON.stringify(data)],{type:"application/json"}));
+  a.download="calendrier-avent-2026-sauvegarde.json";a.click();
+};
+$("imp").onclick=function(){$("fimp").click()};
+$("fimp").addEventListener("change",function(){
+  var f=this.files[0];if(!f)return;var fr=new FileReader();
+  fr.onload=function(){try{data=JSON.parse(fr.result);sauver();dessiner()}catch(e){alert("Fichier de sauvegarde invalide.")}};
+  fr.readAsText(f);this.value="";
+});
+$("raz").onclick=function(){if(confirm("Effacer toutes les données du calendrier ? Pensez à exporter d’abord.")){data={};sauver();dessiner()}};
+
+charger();dessiner();
+</script>
+</body>
+</html>
